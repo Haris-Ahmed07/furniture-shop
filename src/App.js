@@ -6,6 +6,7 @@ import ContactButton from "./components/ContactButton/ContactButton";
 function App() {
   return (
     <div className="flex flex-col min-h-screen App w-full">
+    
       <RoutesConfiguration />
 
       <div className="flex-grow ">

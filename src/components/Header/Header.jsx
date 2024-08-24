@@ -5,7 +5,7 @@ import { navigation } from "../../data.js";
 import NavMobile from "../NavMobile/NavMobile.jsx";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
   const [bg, setBg] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
 
@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <header
       className={`${
-        bg ? "bg-primary " : "bg-none "
+        props.color === "dark" ? "bg-primary " : "bg-none"
       } fixed left-0 xl:py-3 lg:py-3 md:py-3 sm:py-3 xs:py-3 w-full z-10 transition-all duration-200 md:mt-10 sm:mt-10 xs:mt-10 lg:mt-0 xl:mt-0`}
     >
       <div className="container mx-auto">
@@ -36,12 +36,12 @@ const Header = () => {
               {navigation.map((item, index) => {
                 return (
                   <li key={index}>
-                    <a
+                    <Link
                       className="capitalize text-xl text-white hover:border-b transition-all"
-                      href={item.href}
+                      to={`/${item.href}`}
                     >
                       {item.name}
-                    </a>
+                    </Link>
                   </li>
                 );
               })}
@@ -50,9 +50,20 @@ const Header = () => {
           <div
             className={`${
               mobileNav ? "left-0" : "-left-full"
-            } md:hidden fixed w-full max-w-xs h-screen transition-all top-1`}
+            } md:hidden fixed bottom-0 min-w-full w-full max-w-xs h-fit transition-all top-[5.4rem] bg-light rounded-b-2xl shadow-lg border bg-white`}
           >
-            <NavMobile />
+            <ul className="flex-col flex mt-4">
+              {navigation.map((item, index) => (
+                <li key={index} onClick={() => setMobileNav(!mobileNav)}>
+                  <Link
+                    to={`/${item.href}`}
+                    className="block pl-4 pr-4 rounded text-left text-lg text-gray-800 py-4"
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
